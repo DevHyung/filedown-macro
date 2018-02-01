@@ -1,2 +1,4 @@
 chromedriver.exe
 option.txt
+*.xls
+*.xlsx
