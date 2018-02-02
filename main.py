@@ -22,10 +22,16 @@ hanaID = option[26].strip()
 hanaPW = option[28].strip()
 kbID = option[32].strip()
 kbPW = option[34].strip()
-bcID = option[44].strip()
-bcPW = option[46].strip()
 hdID = option[2].strip()
 hdPW = option[4].strip()
+bcID = option[44].strip()
+bcPW = option[46].strip()
+tID = option[50].strip()
+tPW = option[52].strip()
+semID = option[56].strip()
+semPW = option[58].strip()
+
+
 chromeOptions = webdriver.ChromeOptions()
 prefs = {"download.default_directory": os.getcwd() }
 chromeOptions.add_experimental_option("prefs", prefs)
@@ -89,7 +95,7 @@ def hana():
     #driver.execute_script("document.getElementById('PASSWORD').setAttribute('e2e_type','2');")
     #'document.getElementById('PASSWORD').value ="mall28!!"'
     #driver.execute_script("document.getElementById('PASSWORD').value = '"+hanaPW+"'")
-    #driver.find_element_by_xpath('//*[@id="form1"]/div/div/div/article[1]/div/div[1]/fieldset/ul[2]/li[3]/a').click()
+    #driver.find_element_by_xpath('//*[@id="form1"]/div/div/div/article[1]/di   v/div[1]/fieldset/ul[2]/li[3]/a').click()
     #time.sleep(10)
     driver.get('https://www.hanacard.co.kr/OMY05000000M.web?schID=mcd&mID=OMY05000000M')
     time.sleep(3)
@@ -217,22 +223,112 @@ def lotte():
     driver.find_element_by_xpath('//*[@id="divList"]/div[1]/ul/li[1]/a').click()
     time.sleep(10)
     pass
-def hyungdae():
-    driver.get('https://www.hyundaicard.com/csa/mb/CSAMB0101_01.hc')
+def hyundae():
+    driver.get('https://www.hyundaicard.com/csa/mb/STOREMAIN.hc')
     time.sleep(5)
-    driver.find_element_by_xpath('//*[@id="userid"]').send_keys(hdID)
+    driver.find_element_by_xpath('//*[@id="idViewBtn"]').click()
     time.sleep(1)
-    #driver.execute_script("document.getElementById('mbr_pswd').setAttribute('e2e_type','0');")
-    #driver.execute_script("document.getElementById('mbr_pswd').value = '" + lottePW + "'")
-    driver.find_element_by_xpath('//*[@id="userpswd"]').send_keys(hdPW+Keys.RETURN)
+    driver.find_element_by_xpath('//*[@id="userid"]').send_keys(hdID)
+    input(">>> 로그인후 엔터를 눌주세요")
+    time.sleep(1)
+    driver.find_element_by_xpath('//*[@id="container"]/div[1]/ul/ul[1]/li[4]/dl/dd/ul/li[1]').click()
+    time.sleep(3)
+    driver.find_element_by_xpath('//*[@id="iqryPrd1"]').clear()
+    driver.find_element_by_xpath('//*[@id="iqryPrd1"]').send_keys(yesterday)
+    driver.find_element_by_xpath('//*[@id="iqryPrd2"]').clear()
+    driver.find_element_by_xpath('//*[@id="iqryPrd2"]').send_keys(today)
+    driver.find_element_by_xpath('//*[@id="searchBtn1"]').click()
+    time.sleep(5)
+    driver.find_element_by_xpath('//*[@id="excelBtn1"]').click()
+    time.sleep(10)
+def tpay():
+    driver.get('https://jms.jtnet.co.kr/jsp/main.jsp')
+    time.sleep(5)
+    driver.find_element_by_xpath('//*[@id="userCd"]').send_keys(tID)
+    time.sleep(1)
+    driver.find_element_by_xpath('//*[@id="password"]').send_keys(tPW)
+    time.sleep(1)
+    driver.find_element_by_xpath('//*[@id="signBtn"]').click()
+    time.sleep(5)
+    try:
+        driver.find_element_by_xpath('//*[@id="bread_AX_basicDialog0_AX_buttons_AX_0"]').click()
+    except:
+        pass
+    time.sleep(3)
+    driver.find_element_by_xpath('//*[@id="ax-top-menu_PMA_1"]').click()
+    time.sleep(3)
+    driver.find_element_by_xpath('//*[@id="ax-top-menu_PMA_1_0"]').click()
+    time.sleep(5)
+    iframe = driver.find_elements_by_tag_name('iframe')[1]
+    driver.switch_to_frame(iframe)
+    driver.find_element_by_xpath('//*[@id="tranStart"]').clear()
+    driver.find_element_by_xpath('//*[@id="tranStart"]').send_keys(yesterday)
+    driver.find_element_by_xpath('//*[@id="tranEnd"]').clear()
+    driver.find_element_by_xpath('//*[@id="tranEnd"]').send_keys(today)
+    driver.find_element_by_xpath('//*[@id="ax-page-btn-search"]').click()
+    time.sleep(5)
+    driver.find_element_by_xpath('//*[@id="ax-page-btn-excel"]').click()
+    time.sleep(3)
+    driver.switch_to_default_content()
+    driver.find_element_by_xpath('//*[@id="ax-top-menu_PMA_1"]').click()
+    time.sleep(3)
+    driver.find_element_by_xpath('//*[@id="ax-top-menu_PMA_1_4"]').click()
+    time.sleep(5)
+    iframe = driver.find_elements_by_tag_name('iframe')[2]
+    driver.switch_to_frame(iframe)
+    driver.find_element_by_xpath('//*[@id="tranStart"]').clear()
+    driver.find_element_by_xpath('//*[@id="tranStart"]').send_keys(yesterday)
+    driver.find_element_by_xpath('//*[@id="tranEnd"]').clear()
+    driver.find_element_by_xpath('//*[@id="tranEnd"]').send_keys(today)
+    driver.find_element_by_xpath('//*[@id="ax-page-btn-search"]').click()
+    time.sleep(5)
+    driver.find_element_by_xpath('//*[@id="ax-page-btn-excel"]').click()
+    time.sleep(10)
+def sem():
+    driver.get('https://semplus.kisvan.co.kr/')
+    time.sleep(5)
+    frame = driver.find_element_by_tag_name('frame')
+    driver.switch_to_frame(frame)
+    driver.find_element_by_xpath('//*[@id="ibx_userId"]').send_keys(semID)
+    time.sleep(1)
+    driver.find_element_by_xpath('//*[@id="ibx_Password"]').send_keys(semPW)
+    time.sleep(1)
+    driver.find_element_by_xpath('//*[@id="grp_login"]').click()
+    time.sleep(5)
 
+    driver.find_element_by_xpath('//*[@id="generator1_0_btn_TopMenu1"]').click()
+    time.sleep(2)
+    driver.find_element_by_xpath('//*[@id="generator1_0_generator2_1_btn_TopMenuSub"]').click()
+    time.sleep(5)
+
+    iframe = driver.find_element_by_id('windowContainer1_subWindow0_iframe')
+    driver.switch_to_frame(iframe)
+    driver.find_element_by_xpath('//*[@id="btn_Search"]').click()
+    time.sleep(5)
+    driver.find_element_by_xpath('//*[@id="grd_Master_cell_0_7"]/nobr').click()
+    main_window_handle = None
+    while not main_window_handle:
+        main_window_handle = driver.current_window_handle
+    signin_window_handle = None
+    while not signin_window_handle:
+        for handle in driver.window_handles:
+            if handle != main_window_handle:
+                signin_window_handle = handle
+                break
+    driver.switch_to.window(signin_window_handle)
+    driver.find_element_by_xpath('//*[@id="btn_Excel"]').click()
+    time.sleep(10)
 if __name__=="__main__":
     #samsung()#성공
-    #sinhan()#성공
-    #kb() #성공
-    #lotte()#성공
-    hyungdae()
-    #bc() #꼮익스를 써야함
+    #sinhan()#성공 뚜러ㅓ따
+    #kb() #성공 뚜러따
+    #lotte()#성공 뚜러따
+    #tpay()#성공
+    sem()
+    #hyundae() #이것도 로그인 필요
     #hana()  # 이것도 조금 특별히 로그인을 해야한다.
+
+    #bc() # 익스를 써야함안됌 이건
     #nh() # 이것도 로그인하고 해야할듯
+
     driver.quit()
