@@ -23,6 +23,8 @@ def hyundae():
         driver.get('https://www.hyundaicard.com/csa/mb/STOREMAIN.hc')
         time.sleep(5)
         input(">>> 로그인후 엔터를 눌주세요")
+        xplist = ['//*[@id="header"]/div[2]/div/h1/a','//*[@id="container"]/div[1]/ul/ul[1]/li[4]/dl/dd/ul/li[1]']
+        tmpidx = 0
         while True:
             print("_"*30)
             print(">>> 매일 새벽 6:20 분에 자동으로 작동 시작됩니다.")
@@ -30,13 +32,18 @@ def hyundae():
             print(">>> 대기중...")
             while True:
                 # if your start 6:20  below start 6:21
+                time.sleep(random.randint(57,60))
                 curTime = datetime.now()
-                if (curTime.hour == 6 and curTime.minute == 20) or (curTime.hour == 6 and curTime.minute == 21):
+                if (curTime.hour == 6 and curTime.minute == 20):
                     print(">>> Try Time : ", curTime)
                     print(">>> 보안프로그램 업데이트 또는, 사이트개편으로 실패한것만 아래에 로그가 남습니다.")
+                    tmpidx = 0
                     break
-                time.sleep(random.randint(58,62))
-                driver.find_element_by_xpath('//*[@id="header"]/div[2]/div/h1/a').click()
+                try:
+                    driver.find_element_by_xpath(xplist[tmpidx%2]).click()
+                except:
+                    driver.find_element_by_xpath(xplist[0]).click()
+                tmpidx+=1
             time.sleep(1)
             today = date.today().strftime("%Y%m%d")
             yesterday = date.fromtimestamp(time.time() - 60 * 60 * 24).strftime("%Y%m%d")
