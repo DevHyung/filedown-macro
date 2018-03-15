@@ -11,12 +11,12 @@ wkbk = Workbook()
 
 for card in cardList:
   filelist = os.listdir(card+'/')
-  idx = 0
+  idx = 1
   for file in filelist:
     try:
       outrow_idx = 0
       insheet = open_workbook(card + '/' + file).sheets()[0]
-      outsheet = wkbk.add_sheet(card + str(idx))
+      outsheet = wkbk.add_sheet(card +'_'+ str(idx))
       for row_idx in range(insheet.nrows):
         for col_idx in range(insheet.ncols):
           outsheet.write(outrow_idx, col_idx,
